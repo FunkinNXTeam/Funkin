@@ -772,7 +772,7 @@ class Save implements ConsoleClass
     Sys.println('[SAVE] Binding save data for slot ' + slot + '...');
 
     // CRASH HERE!!!
-    FlxG.save.bind(Constants. SAVE_NAME + slot, Constants.SAVE_PATH);
+    FlxG.save.bind(Constants.SAVE_NAME + slot, Constants.SAVE_PATH);
 
     Sys.println('[SAVE] Save path: ' + FlxG.save.path);
     Sys.println('[SAVE] Save status: ' + FlxG.save.status);
@@ -820,7 +820,8 @@ class Save implements ConsoleClass
     // Don't touch that slot anymore.
     // Instead, load the next available slot.
     var nextSlot:Int = slot + 1;
-    if (nextSlot > 1000) {
+    if (nextSlot > 1000)
+    {
       Sys.println('[SAVE] End of save data slots. Can\'t load any more.');
       throw "End of save data slots. Can't load any more.";
     }
