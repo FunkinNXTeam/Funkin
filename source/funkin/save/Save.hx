@@ -764,7 +764,19 @@ class Save implements ConsoleClass
   static function loadFromSlot(slot:Int):Save
   {
     trace('[SAVE] Loading save from slot $slot...');
-    FlxG.save.bind(Constants.SAVE_NAME + slot, Constants.SAVE_PATH);
+
+    // #if switch
+    // flixel.util.FlxSave._SWITCH_SAVE_PATH = "Friday-Night-Funkin";
+    // #end
+
+    Sys.println('[SAVE] Binding save data for slot ' + slot + '...');
+
+    // CRASH HERE!!!
+    FlxG.save.bind(Constants. SAVE_NAME + slot, Constants.SAVE_PATH);
+
+    Sys.println('[SAVE] Save path: ' + FlxG.save.path);
+    Sys.println('[SAVE] Save status: ' + FlxG.save.status);
+
     switch (FlxG.save.status)
     {
       case EMPTY:
@@ -803,11 +815,15 @@ class Save implements ConsoleClass
   {
     var msg = 'There was an error loading your save data in slot ${slot}.';
     msg += '\nPlease report this issue to the developers.';
+    trace(msg);
     funkin.util.WindowUtil.showError("Save Data Failure", msg);
     // Don't touch that slot anymore.
     // Instead, load the next available slot.
     var nextSlot:Int = slot + 1;
-    if (nextSlot > 1000) throw "End of save data slots. Can't load any more.";
+    if (nextSlot > 1000) {
+      Sys.println('[SAVE] End of save data slots. Can\'t load any more.');
+      throw "End of save data slots. Can't load any more.";
+    }
     return loadFromSlot(nextSlot);
   }
 

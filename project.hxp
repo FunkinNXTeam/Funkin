@@ -23,6 +23,7 @@ using tools.AnsiUtil;
 @:nullSafety
 class Project extends HXProject
 {
+
   //
   // METADATA
   //
@@ -133,6 +134,11 @@ class Project extends HXProject
    * The Nintendo Switch Application ID.
    */
   static final SWITCH_APP_ID:String = "0x01c4092895dc0000";
+
+  /**
+   * The Nintendo Switch IP address.
+   */
+  static final SWITCH_IP:String = "192.168.1.140";
 
   /**
    * A list of asset file globs to exclude from ASTC compression when creating optimized mobile builds.
@@ -1099,7 +1105,7 @@ class Project extends HXProject
       this.defines.set("LIME_CAIRO", "0");
       this.defines.set("LIME_OPENGL", "1");
       this.defines.set("APP_ID", SWITCH_APP_ID);
-      config.set("switch.ip", "10.0.0.60");
+      config.set("switch.ip", SWITCH_IP);
     }
   }
 

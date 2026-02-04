@@ -45,6 +45,9 @@ class Main extends Sprite
     #elseif ios
     // On iOS use Documents Dir.
     Sys.setCwd(haxe.io.Path.addTrailingSlash(lime.system.System.documentsDirectory));
+    #elseif switch
+    // On Nintendo Switch use the "romfs:/" path.
+    Sys.setCwd("romfs:/");
     #end
 
     // We need to make the crash handler LITERALLY FIRST so nothing EVER gets past it.
@@ -102,6 +105,7 @@ class Main extends Sprite
       desc += 'Make sure your device supports $requiredVersion.';
       #end
 
+      trace(' ERROR '.bold().bg_red() + ' ' + desc);
       WindowUtil.showError('Failed to initialize $tech', desc);
       System.exit(1);
     }

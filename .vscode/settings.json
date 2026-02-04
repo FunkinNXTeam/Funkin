@@ -80,6 +80,7 @@
     { "name": "html5", "enabled": true, "label": "HTML5" },
     { "name": "android", "enabled": true, "label": "Android" },
     { "name": "ios", "enabled": true, "label": "iOS" },
+    { "name": "switch", "enabled": true, "label": "Switch"},
     // Disabled targets
     { "name": "hl", "enabled": false, "label": "HashLink" },
     { "name": "air", "enabled": false },
@@ -90,6 +91,30 @@
   ],
   "lime.defaultTargetConfiguration": "Windows / Debug",
   "lime.targetConfigurations": [
+    {
+        "label": "Switch",
+        "target": "switch",
+        "args": ["-DHX_NX"],
+        "enabled": true
+    },
+    {
+        "label": "Switch / Release",
+        "target": "switch",
+        "args": ["-DHX_NX"],
+        "enabled": true
+    },
+    {
+        "label": "Switch / Debug",
+        "target": "switch",
+        "args": ["-debug", "-DHX_NX"],
+        "enabled": true
+    },
+    {
+        "label": "Switch / Final",
+        "target": "switch",
+        "args": ["-final", "-DHX_NX"],
+        "enabled": true
+    },
     {
       "label": "Windows / Debug (Discord)",
       "target": "windows",
@@ -186,5 +211,9 @@
   "vscord.app.privacyMode.enable": true,
   "json.schemas": [
     { "fileMatch": ["/hmm.json"], "url": "./.vscode/schema/hmm.json" }
-  ]
+  ],
+  "workbench.colorCustomizations": {
+    "minimap.background": "#00000000",
+    "scrollbar.shadow": "#00000000"
+  }
 }
