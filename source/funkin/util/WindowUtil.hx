@@ -201,6 +201,19 @@ class WindowUtil
     final handlePtr:cpp.RawPointer<cpp.Void> = untyped __cpp__('(void*)(uintptr_t){0}', handleVal);
 
     funkin.external.windows.WinAPI.showWarning(handlePtr, desc, name);
+    #elseif switch
+    if (!(Applet.appletGetAppletType() != AppletType.AppletType_Application
+      && Applet.appletGetAppletType() != AppletType.AppletType_SystemApplication))
+    {
+      var config:ErrorApplicationConfig = new ErrorApplicationConfig();
+      var result:ResultType = Error.errorApplicationCreate(Pointer.addressOf(config), name + "\n\n" + desc, "");
+
+      if (Result.R_SUCCEEDED(result))
+      {
+        Error.errorApplicationSetNumber(Pointer.addressOf(config), 1);
+        Error.errorApplicationShow(Pointer.addressOf(config));
+      }
+    }
     #else
     lime.app.Application.current.window.alert(desc, name);
     #end
@@ -219,6 +232,19 @@ class WindowUtil
     final handlePtr:cpp.RawPointer<cpp.Void> = untyped __cpp__('(void*)(uintptr_t){0}', handleVal);
 
     funkin.external.windows.WinAPI.showInformation(handlePtr, desc, name);
+    #elseif switch
+    if (!(Applet.appletGetAppletType() != AppletType.AppletType_Application
+      && Applet.appletGetAppletType() != AppletType.AppletType_SystemApplication))
+    {
+      var config:ErrorApplicationConfig = new ErrorApplicationConfig();
+      var result:ResultType = Error.errorApplicationCreate(Pointer.addressOf(config), name + "\n\n" + desc, "");
+
+      if (Result.R_SUCCEEDED(result))
+      {
+        Error.errorApplicationSetNumber(Pointer.addressOf(config), 2);
+        Error.errorApplicationShow(Pointer.addressOf(config));
+      }
+    }
     #else
     lime.app.Application.current.window.alert(desc, name);
     #end

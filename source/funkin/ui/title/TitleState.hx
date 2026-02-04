@@ -190,6 +190,11 @@ class TitleState extends MusicBeatState
    */
   function moveToAttract():Void
   {
+    #if switch
+      trace('Attract mode is not available on Switch.');
+      return;
+    #end
+
     FlxG.sound.music.fadeOut(2.0, 0);
     FlxG.camera.fade(FlxColor.BLACK, 2.0, false, function() {
       FlxG.switchState(() -> new AttractState());
@@ -288,12 +293,16 @@ class TitleState extends MusicBeatState
 
     if (gamepad != null)
     {
-      if (gamepad.justPressed.START || gamepad.justPressed.ACCEPT) pressedEnter = true;
+      if (gamepad.justPressed.START || gamepad.justPressed.ACCEPT) {
+        Sys.println('Gamepad: Enter pressed');
+        pressedEnter = true;
+      }
     }
 
     // If you spam Enter, we should skip the transition.
     if (pressedEnter && transitioning && skippedIntro)
     {
+      trace('Skipping transition...');
       moveToMainMenu();
     }
 
@@ -342,6 +351,7 @@ class TitleState extends MusicBeatState
     }
 
     funkin.FunkinMemory.purgeCache();
+    trace('Moving to main menu...');
     FlxG.switchState(() -> new MainMenuState());
   }
 

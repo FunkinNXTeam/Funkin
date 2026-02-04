@@ -765,17 +765,16 @@ class Save implements ConsoleClass
   {
     trace('[SAVE] Loading save from slot $slot...');
 
-    // #if switch
-    // flixel.util.FlxSave._SWITCH_SAVE_PATH = "Friday-Night-Funkin";
-    // #end
+    #if switch
+    flixel.util.FlxSave._SWITCH_SAVE_PATH = "sdmc:/switch/Friday-Night-Funkin/saves";
+    #end
 
-    Sys.println('[SAVE] Binding save data for slot ' + slot + '...');
+    // Sys.println('[SAVE] Binding save data for slot ' + slot + '...');
 
-    // CRASH HERE!!!
     FlxG.save.bind(Constants.SAVE_NAME + slot, Constants.SAVE_PATH);
 
-    Sys.println('[SAVE] Save path: ' + FlxG.save.path);
-    Sys.println('[SAVE] Save status: ' + FlxG.save.status);
+    // Sys.println('[SAVE] Save path: ' + FlxG.save.path);
+    // Sys.println('[SAVE] Save status: ' + FlxG.save.status);
 
     switch (FlxG.save.status)
     {
@@ -815,7 +814,7 @@ class Save implements ConsoleClass
   {
     var msg = 'There was an error loading your save data in slot ${slot}.';
     msg += '\nPlease report this issue to the developers.';
-    trace(msg);
+    // trace(msg);
     funkin.util.WindowUtil.showError("Save Data Failure", msg);
     // Don't touch that slot anymore.
     // Instead, load the next available slot.
