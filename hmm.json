@@ -22,6 +22,12 @@
       "url": "https://github.com/FunkinCrew/extension-admob"
     },
     {
+      "name": "hx_libnx",
+      "type": "git",
+      "dir": null,
+      "url": "https://github.com/Slushi-Github/hx_libnx"
+    },
+    {
       "name": "extension-androidtools",
       "type": "haxelib",
       "version": "2.2.2"
@@ -118,8 +124,7 @@
       "name": "hxcpp",
       "type": "git",
       "dir": null,
-      "ref": "5932340d095a7eea8635fe4d1355f1c0efd0b3c2",
-      "url": "https://github.com/FunkinCrew/hxcpp"
+      "url": "https://github.com/FunkinNXTeam/hxcpp-nx"
     },
     {
       "name": "hxcpp-debug-server",
@@ -176,8 +181,7 @@
       "name": "lime",
       "type": "git",
       "dir": null,
-      "ref": "318253ea3a28a3299a167748912c40444f403777",
-      "url": "https://github.com/FunkinCrew/lime"
+      "url": "https://github.com/FunkinNXTeam/lime-nx"
     },
     {
       "name": "newgrounds",

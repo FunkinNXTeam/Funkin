@@ -125,6 +125,15 @@ class Project extends HXProject
    */
   static var IOS_TEAM_ID:String = "Z7G7AVNGSH";
 
+  //
+  // SWITCH METADATA
+  //
+
+  /**
+   * The Nintendo Switch Application ID.
+   */
+  static final SWITCH_APP_ID:String = "0x01c4092895dc0000";
+
   /**
    * A list of asset file globs to exclude from ASTC compression when creating optimized mobile builds.
    */
@@ -684,6 +693,16 @@ class Project extends HXProject
       this.window.height = 0;
     }
 
+    if (isSwitch())
+    {
+      this.window.orientation = Orientation.LANDSCAPE;
+      this.window.fullscreen = true;
+      this.window.resizable = false;
+      this.window.hardware = true;
+      this.window.width = 0;
+      this.window.height = 0;
+    }
+
     if (isAndroid())
     {
       if (EXCLUDE_ARMV7.isEnabled(this))
@@ -716,6 +735,8 @@ class Project extends HXProject
         info('Target Platform: IOS');
       case Platform.HTML5:
         info('Target Platform: HTML5');
+      case Platform.SWITCH:
+        info('Target Platform: Nintendo Switch');
       // See lime.tools.Platform for a full list.
       // case Platform.EMSCRITEN: // A WebAssembly build might be interesting...
       // case Platform.AIR:
@@ -867,7 +888,7 @@ class Project extends HXProject
     FEATURE_LOG_TRACE.apply(this, true);
     FEATURE_DEBUG_FILE_LOGGING.apply(this, FEATURE_DEBUG_FUNCTIONS.isEnabled(this));
     FEATURE_NAUGHTYNESS.apply(this, true);
-    FEATURE_OPEN_URL.apply(this, true);
+    FEATURE_OPEN_URL.apply(this, !isSwitch());
     FEATURE_PARTIAL_SOUNDS.apply(this, true);
     FEATURE_POLYMOD_MODS.apply(this, true);
 
@@ -1069,6 +1090,16 @@ class Project extends HXProject
       // setHaxedef("HXCPP_TRACY_INCLUDE_CALLSTACKS"); // Inspect callstacks per zone, inflating telemetry data
 
       setHaxedef("absolute-paths"); // Fix source locations so Tracy can see them
+    }
+
+    if (isSwitch())
+    {
+      setHaxedef("lime-opengl");
+      setHaxedef("lime-cairo", "false");
+      this.defines.set("LIME_CAIRO", "0");
+      this.defines.set("LIME_OPENGL", "1");
+      this.defines.set("APP_ID", SWITCH_APP_ID);
+      config.set("switch.ip", "10.0.0.60");
     }
   }
 
@@ -1364,6 +1395,11 @@ class Project extends HXProject
       addHaxelib('hxgamemode'); // FeralInteractive gamemode
     }
 
+    if (isSwitch())
+    {
+      addHaxelib('hx_libnx');
+    }
+
     if (FEATURE_DISCORD_RPC.isEnabled(this))
     {
       addHaxelib('hxdiscord_rpc'); // Discord API
@@ -1630,6 +1666,10 @@ class Project extends HXProject
       addIcon("art/icons/bf-iOS-Default-1024x1024.png", 1024);
       addIcon("art/icons/bf-iOS-Default-1024x1024.png");
     }
+    else if (isSwitch())
+    {
+      addIcon("art/SwitchIco.png", 256);
+    }
     else
     {
       addIcon("art/icons/icon16.png", 16);
@@ -1752,6 +1792,11 @@ class Project extends HXProject
   public function isIOS():Bool
   {
     return this.target == Platform.IOS;
+  }
+
+  public function isSwitch():Bool
+  {
+    return this.target == Platform.SWITCH;
   }
 
   public function isIOSSimulator():Bool
