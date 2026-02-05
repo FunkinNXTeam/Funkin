@@ -23,6 +23,11 @@ import funkin.util.WindowUtil;
 
 using funkin.util.AnsiUtil;
 
+#if switch
+import nx.NXMain;
+import nx.NXGame;
+#end
+
 /**
  * The main class which initializes HaxeFlixel and starts the game in its initial state.
  */
@@ -161,8 +166,22 @@ class Main extends Sprite
 
     WindowUtil.setVSyncMode(funkin.Preferences.vsyncMode);
 
-    var game:FlxGame = new FlxGame(gameWidth, gameHeight, initialState, Preferences.framerate, Preferences.framerate, skipSplash,
+    if (zoom == -1)
+    {
+      #if switch
+      zoom = 1; // fixes a cam related issue lol, reminds me from when I got the issue a lot when I was doing mobile ports
+      #end
+    }
+
+    #if switch
+    Sys.setCwd("romfs:/");
+    NXMain.init();
+    var game:NXGame = new NXGame(gameWidth, gameHeight, initialState, zoom, Preferences.framerate, Preferences.framerate, skipSplash,
       (FlxG.stage.window.fullscreen || Preferences.autoFullscreen));
+    #else
+    var game:FlxGame = new FlxGame(gameWidth, gameHeight, initialState, zoom, Preferences.framerate, Preferences.framerate, skipSplash,
+      (FlxG.stage.window.fullscreen || Preferences.autoFullscreen));
+    #end
 
     // FlxG.game._customSoundTray wants just the class, it calls new from
     // create() in there, which gets called when it's added to the stage

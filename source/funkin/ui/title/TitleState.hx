@@ -37,6 +37,10 @@ import funkin.save.Save;
 import funkin.util.TouchUtil;
 import funkin.util.SwipeUtil;
 #end
+#if switch
+import nx.NXMain;
+import nx.controls.NXControlButton;
+#end
 
 class TitleState extends MusicBeatState
 {
@@ -289,6 +293,15 @@ class TitleState extends MusicBeatState
     // do controls.PAUSE | controls.ACCEPT instead?
     var pressedEnter:Bool = FlxG.keys.justPressed.ENTER #if mobile || (TouchUtil.justReleased && !SwipeUtil.justSwipedAny) #end;
 
+    #if switch
+    if (NXMain.nxController != null)
+    {
+      if (NXMain.nxController.isJustPressed(NXControlButton.PLUS) || NXMain.nxController.isJustPressed(NXControlButton.A))
+      {
+        pressedEnter = true;
+      }
+    }
+    #else
     var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
 
     if (gamepad != null)
@@ -298,6 +311,7 @@ class TitleState extends MusicBeatState
         pressedEnter = true;
       }
     }
+    #end
 
     // If you spam Enter, we should skip the transition.
     if (pressedEnter && transitioning && skippedIntro)
