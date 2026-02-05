@@ -123,7 +123,7 @@
       "name": "hxcpp",
       "type": "git",
       "dir": null,
-      "url": "https://github.com/FunkinNXTeam/hxcpp-nx"
+      "url": "https://github.com/FunkinNXTeam/hxcpp"
     },
     {
       "name": "hxcpp-debug-server",

@@ -199,6 +199,7 @@ class PreciseInputManager extends FlxKeyManager<FlxKey, PreciseInputList>
       };
     limeGamepad.onButtonDownPrecise.add(callbacks.onButtonDown);
     limeGamepad.onButtonUpPrecise.add(callbacks.onButtonUp);
+    _deviceBinds.set(gamepad, callbacks);
 
     for (noteDirection in DIRECTIONS)
     {
@@ -400,7 +401,9 @@ class PreciseInputManager extends FlxKeyManager<FlxKey, PreciseInputList>
 
   function clearButtons():Void
   {
+    _buttonList.clear();
     _buttonListArray = [];
+    _buttonListMap.clear();
     _buttonListDir.clear();
 
     for (gamepad in _deviceBinds.keys())
