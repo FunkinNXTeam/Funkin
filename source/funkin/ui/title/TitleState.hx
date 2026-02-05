@@ -307,7 +307,6 @@ class TitleState extends MusicBeatState
     if (gamepad != null)
     {
       if (gamepad.justPressed.START || gamepad.justPressed.ACCEPT) {
-        Sys.println('Gamepad: Enter pressed');
         pressedEnter = true;
       }
     }
@@ -316,7 +315,6 @@ class TitleState extends MusicBeatState
     // If you spam Enter, we should skip the transition.
     if (pressedEnter && transitioning && skippedIntro)
     {
-      trace('Skipping transition...');
       moveToMainMenu();
     }
 
@@ -365,7 +363,6 @@ class TitleState extends MusicBeatState
     }
 
     funkin.FunkinMemory.purgeCache();
-    trace('Moving to main menu...');
     FlxG.switchState(() -> new MainMenuState());
   }
 
