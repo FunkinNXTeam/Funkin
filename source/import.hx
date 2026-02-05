@@ -1,5 +1,6 @@
 #if !macro
 import cpp.*;
+
 // Nintendo Switch imports
 #if switch
 import switchLib.Result;
@@ -10,10 +11,12 @@ import switchLib.arm.Counter;
 import switchLib.services.Applet;
 import nx.NXMain;
 import nx.NXGame;
+import nx.NXSimpleWeb;
 import nx.controls.NXController;
 import nx.controls.NXControlButton;
 import nx.controls.NXVibrationHD;
 #end
+
 // Flixel
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -25,6 +28,7 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.group.FlxSpriteGroup;
 import flixel.group.FlxGroup.FlxTypedGroup;
+
 #if sys
 import sys.*;
 import sys.io.*;

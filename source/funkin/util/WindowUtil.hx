@@ -74,6 +74,10 @@ class WindowUtil
 
     #if linux
     Sys.command('/usr/bin/xdg-open $targetUrl &');
+    #elseif switch
+    var browser = new NXSimpleWeb(targetUrl);
+    browser.showWebPage();
+    browser.destroy();
     #else
     // This should work on Windows and HTML5.
     FlxG.openURL(targetUrl);
@@ -171,8 +175,7 @@ class WindowUtil
 
     funkin.external.windows.WinAPI.showError(handlePtr, desc, name);
     #elseif switch
-    if (!(Applet.appletGetAppletType() != AppletType.AppletType_Application
-      && Applet.appletGetAppletType() != AppletType.AppletType_SystemApplication))
+    if (!NXMain.isRunningAsApplet())
     {
       var config:ErrorApplicationConfig = new ErrorApplicationConfig();
       var result:ResultType = Error.errorApplicationCreate(Pointer.addressOf(config), name + "\n\n" + desc, "");
@@ -202,8 +205,7 @@ class WindowUtil
 
     funkin.external.windows.WinAPI.showWarning(handlePtr, desc, name);
     #elseif switch
-    if (!(Applet.appletGetAppletType() != AppletType.AppletType_Application
-      && Applet.appletGetAppletType() != AppletType.AppletType_SystemApplication))
+    if (!NXMain.isRunningAsApplet())
     {
       var config:ErrorApplicationConfig = new ErrorApplicationConfig();
       var result:ResultType = Error.errorApplicationCreate(Pointer.addressOf(config), name + "\n\n" + desc, "");
@@ -233,8 +235,7 @@ class WindowUtil
 
     funkin.external.windows.WinAPI.showInformation(handlePtr, desc, name);
     #elseif switch
-    if (!(Applet.appletGetAppletType() != AppletType.AppletType_Application
-      && Applet.appletGetAppletType() != AppletType.AppletType_SystemApplication))
+    if (!NXMain.isRunningAsApplet())
     {
       var config:ErrorApplicationConfig = new ErrorApplicationConfig();
       var result:ResultType = Error.errorApplicationCreate(Pointer.addressOf(config), name + "\n\n" + desc, "");

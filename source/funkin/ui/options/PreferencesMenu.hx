@@ -161,7 +161,7 @@ class PreferencesMenu extends Page<OptionsState.OptionsMenuPageName>
       Preferences.debugDisplayBGOpacity = value;
     }, Preferences.debugDisplayBGOpacity);
     #end
-    #if !mobile
+    #if !(mobile || switch)
     createPrefItemCheckbox('Pause on Unfocus', 'When enabled, the game automatically pauses when losing focus.', function(value:Bool):Void {
       Preferences.autoPause = value;
     }, Preferences.autoPause);
@@ -177,7 +177,7 @@ class PreferencesMenu extends Page<OptionsState.OptionsMenuPageName>
     #else
     // disabled on macos due to "error: Late swap tearing currently unsupported"
     // disable on mobile since it barely has any effect
-    #if !(mac || mobile)
+    #if !(mac || mobile || switch)
     createPrefItemEnum('VSync', "When enabled, the game attempts to match the framerate with your monitor's refresh rate.", [
       "Off" => WindowVSyncMode.OFF,
       "On" => WindowVSyncMode.ON,
@@ -192,7 +192,7 @@ class PreferencesMenu extends Page<OptionsState.OptionsMenuPageName>
         case WindowVSyncMode.ADAPTIVE: "Adaptive";
       });
     #end
-    #if !mobile
+    #if !(mobile || switch)
     createPrefItemNumber('FPS', 'The maximum framerate that the game targets.', function(value:Float) {
       Preferences.framerate = Std.int(value);
     }, null, Preferences.framerate, 30, 500, 5, 0);

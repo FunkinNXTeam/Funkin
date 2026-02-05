@@ -56,6 +56,8 @@ class PolymodHandler
     '../../../../../../../example_mods'
     #elseif REDIRECT_ASSETS_FOLDER
     '../../../../example_mods'
+    #elseif switch
+    'sdmc:/switch/Friday-Night-Funkin/mods'
     #else
     'mods'
     #end;
