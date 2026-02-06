@@ -2,7 +2,7 @@ package nx;
 
 import nx.controls.NXController;
 #if switch
-import lime.media.AudioManager;
+import funkin.input.PreciseInputManager;
 #end
 
 /**
@@ -44,29 +44,12 @@ class NXMain
   public static var nxController:NXController = null;
 
   /**
-   * Previous app state for detecting state changes
-   */
-  private static var _previousAppState:AppletStateMode = APP_UNKNOWN;
-
-  /**
-   * Whether audio is currently suspended by us
-   */
-  private static var _audioSuspended:Bool = false;
-
-  /**
-   * Whether the app has been in focus at least once (game fully started)
-   */
-  private static var _hasBeenInFocus:Bool = false;
-
-  /**
    * Initialize Nintendo Switch systems
    */
   public static function init()
   {
     #if switch
     nxController = new NXController();
-    _previousAppState = appState;
-    _hasBeenInFocus = (_previousAppState == APP_IN_FOCUS);
     #end
   }
 
@@ -81,61 +64,10 @@ class NXMain
       nxController.update();
     }
 
-    handleAudioState();
-    #end
-  }
-
-  /**
-   * Handle audio context suspension when app loses focus or is suspended.
-   * This fixes the OpenAL bug where audio stops working after the app goes to background.
-   */
-  private static function handleAudioState():Void
-  {
-    #if switch
-    var currentState = appState;
-
-    if (!_hasBeenInFocus && currentState == APP_IN_FOCUS)
+    if (PreciseInputManager.instance != null)
     {
-      _hasBeenInFocus = true;
-      _previousAppState = currentState;
-      return;
+      PreciseInputManager.instance.updateNXInput();
     }
-
-    if (!_hasBeenInFocus)
-    {
-      _previousAppState = currentState;
-      return;
-    }
-
-    if (currentState == _previousAppState)
-    {
-      return;
-    }
-
-    if (AudioManager.context == null)
-    {
-      _previousAppState = currentState;
-      return;
-    }
-
-    if (currentState == APP_OUT_OF_FOCUS || currentState == APP_SUSPENDED)
-    {
-      if (_previousAppState == APP_IN_FOCUS && !_audioSuspended)
-      {
-        AudioManager.suspend();
-        _audioSuspended = true;
-      }
-    }
-    else if (currentState == APP_IN_FOCUS)
-    {
-      if (_audioSuspended)
-      {
-        AudioManager.resume();
-        _audioSuspended = false;
-      }
-    }
-
-    _previousAppState = currentState;
     #end
   }
 

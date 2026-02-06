@@ -1021,9 +1021,9 @@ class Controls extends FlxActionSet
     return switch (control)
     {
       case Control.ACCEPT:
-        [A];
-      case Control.BACK:
         [B];
+      case Control.BACK:
+        [A];
       case Control.UI_UP:
         [DPAD_UP, LEFT_STICK_DIGITAL_UP];
       case Control.UI_DOWN:

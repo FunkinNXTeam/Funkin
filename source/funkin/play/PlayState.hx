@@ -823,8 +823,7 @@ class PlayState extends MusicBeatSubState
       trace('WARNING: PlayState instance already exists. This should not happen.');
     }
     instance = this;
-    #if !mobile
-    // TODO: Figure out how to do the flair for charting mode!! I can't figure it out for the love of god. -Zack
+    #if !(mobile || switch) // TODO: Figure out how to do the flair for charting mode!! I can't figure it out for the love of god. -Zack
     if (!isChartingMode) FlxG.autoPause = false;
     #end
 
@@ -1335,7 +1334,7 @@ class PlayState extends MusicBeatSubState
     #end
 
     justUnpaused = false;
-    #if !mobile
+    #if !(mobile || switch)
     if (Preferences.autoPause) FlxG.autoPause = !mayPauseGame;
     #end
   }
@@ -1715,7 +1714,7 @@ class PlayState extends MusicBeatSubState
      */
   public override function onFocus():Void
   {
-    if (VideoCutscene.isPlaying() #if !mobile && Preferences.autoPause #end && isGamePaused) VideoCutscene.pauseVideo();
+    if (VideoCutscene.isPlaying() #if !(mobile || switch) && Preferences.autoPause #end && isGamePaused) VideoCutscene.pauseVideo();
     #if html5
     else if (Preferences.autoPause) VideoCutscene.resumeVideo();
     #end
@@ -1777,7 +1776,7 @@ class PlayState extends MusicBeatSubState
     #end
 
     // if else if else if else if else if else AAAAAAAAAAAAAAAAAAAAAAA
-    if (!isGamePaused #if !mobile && Preferences.autoPause #end)
+    if (!isGamePaused #if !(mobile || switch) && Preferences.autoPause #end)
     {
       if (currentConversation != null)
       {
@@ -1916,7 +1915,7 @@ class PlayState extends MusicBeatSubState
     lime.system.System.allowScreenTimeout = Preferences.screenTimeout;
     #end
 
-    #if !mobile
+    #if !(mobile || switch)
     FlxG.autoPause = Preferences.autoPause;
     #end
 
